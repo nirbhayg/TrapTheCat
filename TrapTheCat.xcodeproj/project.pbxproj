@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		BEB3E97119C187A600F04BBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E97019C187A600F04BBE /* AppDelegate.swift */; };
-		BEB3E97419C187A600F04BBE /* TrapTheCat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E97219C187A600F04BBE /* TrapTheCat.xcdatamodeld */; };
 		BEB3E97619C187A600F04BBE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E97519C187A600F04BBE /* ViewController.swift */; };
 		BEB3E97919C187A600F04BBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB3E97719C187A600F04BBE /* Main.storyboard */; };
 		BEB3E97B19C187A600F04BBE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEB3E97A19C187A600F04BBE /* Images.xcassets */; };
 		BEB3E98719C187A600F04BBE /* TrapTheCatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E98619C187A600F04BBE /* TrapTheCatTests.swift */; };
+		BEB3E99119C192B300F04BBE /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E99019C192B300F04BBE /* Vertex.swift */; };
+		BEB3E99319C19E1300F04BBE /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E99219C19E1300F04BBE /* Cat.swift */; };
+		BEB3E99519C19EF200F04BBE /* Mouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E99419C19EF200F04BBE /* Mouse.swift */; };
+		BEBFE95919C1CC9700DCF303 /* TrapTheCat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEBFE95719C1CC9700DCF303 /* TrapTheCat.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +32,16 @@
 		BEB3E96B19C187A600F04BBE /* TrapTheCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrapTheCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB3E96F19C187A600F04BBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEB3E97019C187A600F04BBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BEB3E97319C187A600F04BBE /* TrapTheCat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrapTheCat.xcdatamodel; sourceTree = "<group>"; };
 		BEB3E97519C187A600F04BBE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BEB3E97819C187A600F04BBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEB3E97A19C187A600F04BBE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BEB3E98019C187A600F04BBE /* TrapTheCatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrapTheCatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB3E98519C187A600F04BBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEB3E98619C187A600F04BBE /* TrapTheCatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrapTheCatTests.swift; sourceTree = "<group>"; };
+		BEB3E99019C192B300F04BBE /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		BEB3E99219C19E1300F04BBE /* Cat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
+		BEB3E99419C19EF200F04BBE /* Mouse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mouse.swift; sourceTree = "<group>"; };
+		BEBFE95819C1CC9700DCF303 /* TrapTheCat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrapTheCat.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 		BEB3E96219C187A600F04BBE = {
 			isa = PBXGroup;
 			children = (
+				BEBFE95719C1CC9700DCF303 /* TrapTheCat.xcdatamodeld */,
 				BEB3E96D19C187A600F04BBE /* TrapTheCat */,
 				BEB3E98319C187A600F04BBE /* TrapTheCatTests */,
 				BEB3E96C19C187A600F04BBE /* Products */,
@@ -81,8 +88,10 @@
 				BEB3E97519C187A600F04BBE /* ViewController.swift */,
 				BEB3E97719C187A600F04BBE /* Main.storyboard */,
 				BEB3E97A19C187A600F04BBE /* Images.xcassets */,
-				BEB3E97219C187A600F04BBE /* TrapTheCat.xcdatamodeld */,
 				BEB3E96E19C187A600F04BBE /* Supporting Files */,
+				BEB3E99019C192B300F04BBE /* Vertex.swift */,
+				BEB3E99219C19E1300F04BBE /* Cat.swift */,
+				BEB3E99419C19EF200F04BBE /* Mouse.swift */,
 			);
 			path = TrapTheCat;
 			sourceTree = "<group>";
@@ -212,8 +221,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEB3E97619C187A600F04BBE /* ViewController.swift in Sources */,
+				BEB3E99519C19EF200F04BBE /* Mouse.swift in Sources */,
+				BEB3E99119C192B300F04BBE /* Vertex.swift in Sources */,
+				BEBFE95919C1CC9700DCF303 /* TrapTheCat.xcdatamodeld in Sources */,
+				BEB3E99319C19E1300F04BBE /* Cat.swift in Sources */,
 				BEB3E97119C187A600F04BBE /* AppDelegate.swift in Sources */,
-				BEB3E97419C187A600F04BBE /* TrapTheCat.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +344,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = TrapTheCat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -343,6 +356,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = TrapTheCat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -401,6 +415,7 @@
 				BEB3E98C19C187A600F04BBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BEB3E98D19C187A600F04BBE /* Build configuration list for PBXNativeTarget "TrapTheCatTests" */ = {
 			isa = XCConfigurationList;
@@ -409,17 +424,19 @@
 				BEB3E98F19C187A600F04BBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		BEB3E97219C187A600F04BBE /* TrapTheCat.xcdatamodeld */ = {
+		BEBFE95719C1CC9700DCF303 /* TrapTheCat.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				BEB3E97319C187A600F04BBE /* TrapTheCat.xcdatamodel */,
+				BEBFE95819C1CC9700DCF303 /* TrapTheCat.xcdatamodel */,
 			);
-			currentVersion = BEB3E97319C187A600F04BBE /* TrapTheCat.xcdatamodel */;
-			path = TrapTheCat.xcdatamodeld;
+			currentVersion = BEBFE95819C1CC9700DCF303 /* TrapTheCat.xcdatamodel */;
+			name = TrapTheCat.xcdatamodeld;
+			path = TrapTheCat/TrapTheCat.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
