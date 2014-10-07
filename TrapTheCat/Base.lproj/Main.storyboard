@@ -198,9 +198,9 @@
                         <outlet property="v3" destination="y7M-hy-27j" id="9s9-Fo-3bh"/>
                         <outlet property="v4" destination="XsX-nv-CdL" id="D8m-pF-9UG"/>
                         <outlet property="v5" destination="LKW-ia-xLD" id="jMm-kU-zm5"/>
-                        <outlet property="v6" destination="5eU-3C-7lV" id="Mb3-W0-3xo"/>
+                        <outlet property="v6" destination="SwI-CA-aOx" id="vi1-In-ecG"/>
                         <outlet property="v7" destination="IH9-Js-Qw2" id="Gs1-WN-8kJ"/>
-                        <outlet property="v8" destination="SwI-CA-aOx" id="mIS-sJ-n2y"/>
+                        <outlet property="v8" destination="5eU-3C-7lV" id="E5y-5h-UEF"/>
                         <outlet property="v9" destination="Y3q-R4-xDg" id="fMT-gF-DaJ"/>
                     </connections>
                 </viewController>

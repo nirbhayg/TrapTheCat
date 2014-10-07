@@ -16,7 +16,7 @@ class Mouse: UIView {
     var imageView:UIImageView!
     
     override init() {
-        super.init(frame: CGRectMake(0, 0, 25, 25))
+        super.init(frame: CGRectMake(0, 0, 40, 40))
         self.backgroundColor = UIColor.clearColor()
         
         imageView = UIImageView(frame: frame)

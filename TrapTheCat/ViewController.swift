@@ -124,10 +124,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             return (true, v6)
             
         default:
-            println("no neighbours for \(vertexFrom)")
+            return (false, nil)
         }
-        
-        return (false, nil)
     }
     
     func moveCatToVertex(vertex:Vertex) {
@@ -176,12 +174,35 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         case .MiceTap:
             turn = .MiceMove
         case .MiceMove:
-            turn = .CatTap
+            if didMiceWin() {
+                showError("Mice won!!!!!!!")
+                resetGame()
+            }
+            else {
+                turn = .CatTap
+            }
         case .CatTap:
             turn = .CatMove
         case .CatMove:
             turn = .MiceTap
         }
+    }
+    
+    func didMiceWin() -> Bool {
+        if let catsCurrentVertex = cat.currentVertex {
+            let neighbours = neighboursForVertex(catsCurrentVertex, considerJump: true)
+            for neighbour in neighbours {
+                if neighbour.occupiedBy == OccupiedBy.No_one {
+                    return false
+                }
+            }
+            return true
+        }
+        return false
+    }
+    
+    func resetGame() {
+        resetBoard()
     }
     
     //User input
@@ -229,7 +250,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             endTurn()
         }
         else if turn == Turn.MiceMove {
-            showError("select a vertex for mouse to move to")
+            if let currentlySelectedMouse = selectedMouse() {
+                currentlySelectedMouse.unhighlight()
+                _mouse.highlight()
+            }
+            else {
+                showError("select a vertex for mouse to move to")
+            }
         }
         else {
             showError("Its cat's turn")
@@ -269,7 +296,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                         if let occupiedMidVertex = midVertex {
                             _vertex.highlight()
                             self.moveCatToVertex(_vertex)
-                            showError("Cat jumped over a mouse on vertex \(occupiedMidVertex.ID)")
+                            showError("Cat won!!!!!!!!")
+                            resetGame()
                         }
                         //Cat moved a normal turn
                         else {
@@ -314,6 +342,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         return sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2))
     }
     
+    func neighboursForVertex(vertex:Vertex, considerJump:Bool) -> [Vertex] {
+        var neighbours:[Vertex] = []
+        for potentialNeighbour in vertices {
+            let (answer, dummy) = isVertex(vertex, aNeighbourOf: potentialNeighbour, considerJump: considerJump)
+            if answer {
+                neighbours.append(potentialNeighbour)
+            }
+        }
+        return neighbours
+    }
+    
     //Setup
     
     func initialSetup() {
@@ -336,13 +375,37 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    func resetBoard() {
+        //Position cat
+        self.moveCatToVertex(v9)
+        
+        //Postition mice
+        self.moveMouse(mouse1, toVertex: v0)
+        self.moveMouse(mouse2, toVertex: v1)
+        self.moveMouse(mouse3, toVertex: v2)
+        
+        //            //Position cat
+        //            self.moveCatToVertex(v0)
+        //
+        //            //Postition mice
+        //            self.moveMouse(mouse1, toVertex: v5)
+        //            self.moveMouse(mouse2, toVertex: v3)
+        //            self.moveMouse(mouse3, toVertex: v2)
+        
+        //Message view
+        self.view.bringSubviewToFront(messageView)
+        hideError()
+        
+        connectTheDots()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialSetup()
         
         let recognizer = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
         recognizer.delegate = self
-        self.view.addGestureRecognizer(recognizer)        
+        self.view.addGestureRecognizer(recognizer)
     }
     
     override func viewDidLayoutSubviews() {
@@ -350,22 +413,34 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
      
         if firstLayoutComplete == false {
             firstLayoutComplete = true
-         
-            //Position cat
-            self.moveCatToVertex(v9)
-    
-            //Postition mice
-            self.moveMouse(mouse1, toVertex: v0)
-            self.moveMouse(mouse2, toVertex: v1)
-            self.moveMouse(mouse3, toVertex: v2)
-    
-            //Message view
-            self.view.bringSubviewToFront(messageView)
-            hideError()
+            resetBoard()
         }
     }
     
     //UI Updates
+    
+    func connectTheDots() {
+        
+        //Add layer
+        for vertex in vertices {
+            for neighbour in neighboursForVertex(vertex, considerJump: false) {
+                drawPathFrom(point: vertex.center, toPoint: neighbour.center)
+            }
+        }
+    }
+    
+    func drawPathFrom(#point:CGPoint, toPoint:CGPoint) {
+        let path = UIBezierPath()
+        path.moveToPoint(point)
+        path.addLineToPoint(toPoint)
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.CGPath
+        
+        shapeLayer.strokeColor = UIColor.grayColor().CGColor
+        shapeLayer.lineWidth = 2.5
+        self.view.layer.insertSublayer(shapeLayer, atIndex: 0)
+    }
     
     func showError(message:String) {
         messageLabel.text = message
