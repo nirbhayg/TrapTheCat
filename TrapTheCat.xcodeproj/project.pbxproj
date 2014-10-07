@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE4AD54A19E3A0AC007A3D4E /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = BE4AD54819E3A0AC007A3D4E /* cat.png */; };
+		BE4AD54B19E3A0AC007A3D4E /* mouse.png in Resources */ = {isa = PBXBuildFile; fileRef = BE4AD54919E3A0AC007A3D4E /* mouse.png */; };
+		BE4AD54D19E3AC8C007A3D4E /* vertex.png in Resources */ = {isa = PBXBuildFile; fileRef = BE4AD54C19E3AC8C007A3D4E /* vertex.png */; };
 		BEB3E97119C187A600F04BBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E97019C187A600F04BBE /* AppDelegate.swift */; };
 		BEB3E97619C187A600F04BBE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB3E97519C187A600F04BBE /* ViewController.swift */; };
 		BEB3E97919C187A600F04BBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB3E97719C187A600F04BBE /* Main.storyboard */; };
@@ -29,6 +32,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE4AD54819E3A0AC007A3D4E /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat.png; sourceTree = "<group>"; };
+		BE4AD54919E3A0AC007A3D4E /* mouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse.png; sourceTree = "<group>"; };
+		BE4AD54C19E3AC8C007A3D4E /* vertex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertex.png; sourceTree = "<group>"; };
 		BEB3E96B19C187A600F04BBE /* TrapTheCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrapTheCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB3E96F19C187A600F04BBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEB3E97019C187A600F04BBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +68,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE4AD54719E3A091007A3D4E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE4AD54C19E3AC8C007A3D4E /* vertex.png */,
+				BE4AD54819E3A0AC007A3D4E /* cat.png */,
+				BE4AD54919E3A0AC007A3D4E /* mouse.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BEB3E96219C187A600F04BBE = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +100,7 @@
 		BEB3E96D19C187A600F04BBE /* TrapTheCat */ = {
 			isa = PBXGroup;
 			children = (
+				BE4AD54719E3A091007A3D4E /* Resources */,
 				BEB3E97019C187A600F04BBE /* AppDelegate.swift */,
 				BEB3E97519C187A600F04BBE /* ViewController.swift */,
 				BEB3E97719C187A600F04BBE /* Main.storyboard */,
@@ -201,6 +218,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4AD54A19E3A0AC007A3D4E /* cat.png in Resources */,
+				BE4AD54D19E3AC8C007A3D4E /* vertex.png in Resources */,
+				BE4AD54B19E3A0AC007A3D4E /* mouse.png in Resources */,
 				BEB3E97919C187A600F04BBE /* Main.storyboard in Resources */,
 				BEB3E97B19C187A600F04BBE /* Images.xcassets in Resources */,
 			);
@@ -343,10 +363,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TrapTheCat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -355,6 +377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TrapTheCat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

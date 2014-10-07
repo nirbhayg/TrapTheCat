@@ -27,8 +27,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var v7: Vertex!
     @IBOutlet weak var v8: Vertex!
     @IBOutlet weak var v9: Vertex!
+    @IBOutlet weak var messageView: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageTopDistanceConstraint: NSLayoutConstraint!
     
+    let touchArea:CGFloat = 50.0
     let animationDuration = 0.5
+    var firstLayoutComplete = false
     
     //Items
     var vertices:[Vertex] = []
@@ -109,17 +114,20 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         case v9 where vertexTo == v6 || vertexTo == v8 || vertexTo == v7:
             return (true, nil)
             
-        case v9 where considerJump && (vertexTo == v5)
+        case v9 where considerJump && (vertexTo == v5) && (v8.occupiedBy == OccupiedBy.Mouse):
+            return (true, v8)
             
-            
-            || vertexTo == v3 || vertexTo == v4):
-            return true
+        case v9 where considerJump && (vertexTo == v3) && (v7.occupiedBy == OccupiedBy.Mouse):
+            return (true, v7)
+                
+        case v9 where considerJump && (vertexTo == v4) && (v6.occupiedBy == OccupiedBy.Mouse):
+            return (true, v6)
             
         default:
             println("no neighbours for \(vertexFrom)")
         }
         
-        return false
+        return (false, nil)
     }
     
     func moveCatToVertex(vertex:Vertex) {
@@ -138,6 +146,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.cat.currentVertex = vertex
     
                 self.cat.unhighlight()
+                vertex.unhighlight()
                 self.endTurn()
         })
     }
@@ -157,6 +166,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 mouse.currentVertex = toVertex
     
                 mouse.unhighlight()
+                toVertex.unhighlight()
                 self.endTurn()
         })
     }
@@ -177,21 +187,22 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     //User input
     
     func handleTap(recognizer: UITapGestureRecognizer) {
-        if CGRectContainsPoint(cat.frame, recognizer.locationInView(self.view)) {
+        let tappedPoint = recognizer.locationInView(self.view)
+        if closeEnough(firstPoint: cat.center, secondPoint: tappedPoint) {
             self.catTapped()
         }
-        else if CGRectContainsPoint(mouse1.frame, recognizer.locationInView(self.view)) {
+        else if closeEnough(firstPoint: mouse1.center, secondPoint: tappedPoint) {
             self.mouseTapped(mouse1)
         }
-        else if CGRectContainsPoint(mouse2.frame, recognizer.locationInView(self.view)) {
+        else if closeEnough(firstPoint: mouse2.center, secondPoint: tappedPoint) {
             self.mouseTapped(mouse2)
         }
-        else if CGRectContainsPoint(mouse3.frame, recognizer.locationInView(self.view)) {
+        else if closeEnough(firstPoint: mouse3.center, secondPoint: tappedPoint) {
             self.mouseTapped(mouse3)
         }
         else {
             for vertex in vertices {
-                if CGRectContainsPoint(vertex.frame, recognizer.locationInView(self.view)) {
+                if closeEnough(firstPoint: vertex.center, secondPoint: tappedPoint) {
                     self.vertexTapped(vertex)
                     break
                 }
@@ -205,10 +216,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             endTurn()
         }
         else if turn == .CatMove {
-            println("Select a vertex for cat to move to")
+            showError("Select a vertex for cat to move to")
         }
         else {
-            println("Its mouse's turn")
+            showError("Its mouse's turn")
         }
     }
     
@@ -218,10 +229,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             endTurn()
         }
         else if turn == Turn.MiceMove {
-            println("select a vertex for mouse to move to")
+            showError("select a vertex for mouse to move to")
         }
         else {
-            println("Its cat's turn")
+            showError("Its cat's turn")
         }
     }
     
@@ -229,7 +240,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         //Check if already occupied
         if _vertex.occupiedBy != OccupiedBy.No_one {
-            println("Cannot move there")
+            showError("Cannot move there")
             return
         }
         
@@ -240,33 +251,44 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.moveMouse(selectedMouse, toVertex: _vertex)
             }
             else {
-                println("no mouse selected to move")
+                showError("no mouse selected to move")
             }
         }
         else if turn == .MiceTap {
-            println("first select a mouse to move")
+            showError("first select a mouse to move")
         }
         else if turn == .CatMove {
             if cat.isSelected {
                 
                 //Check if neighbour vertex
                 if let currentCatVertex = cat.currentVertex {
-                    if isVertex(currentCatVertex, aNeighbourOf: _vertex, considerJump: true) {
-                        _vertex.highlight()
-                        self.moveCatToVertex(_vertex)
+                    
+                    let (canJump, midVertex) = isVertex(currentCatVertex, aNeighbourOf: _vertex, considerJump: true)
+                    if canJump {
+                        //Cat jumped over a mouse
+                        if let occupiedMidVertex = midVertex {
+                            _vertex.highlight()
+                            self.moveCatToVertex(_vertex)
+                            showError("Cat jumped over a mouse on vertex \(occupiedMidVertex.ID)")
+                        }
+                        //Cat moved a normal turn
+                        else {
+                            _vertex.highlight()
+                            self.moveCatToVertex(_vertex)
+                        }
                     }
                     else {
-                        println("You can only the cat to neighbouring vertex")
+                        showError("You can only move the cat to neighbouring vertex")
                     }
                 }
                 
             }
             else {
-                println("you need to select the cat first")
+                showError("you need to select the cat first")
             }
         }
         else {
-            println("first select the cat")
+            showError("first select the cat")
         }
     }
     
@@ -281,6 +303,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         return nil
     }
     
+    func closeEnough(#firstPoint:CGPoint, secondPoint:CGPoint) -> Bool {
+        if distanceBetween(point: firstPoint, andPoint: secondPoint) < touchArea {
+            return true
+        }
+        return false
+    }
+
+    func distanceBetween(point p1:CGPoint, andPoint p2:CGPoint) -> CGFloat {
+        return sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2))
+    }
+    
     //Setup
     
     func initialSetup() {
@@ -289,18 +322,16 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         for ii in 0..<vertices.count {
             vertices[ii].ID = ii
+            vertices[ii].setup()
         }
         
         //Add cat
-        cat.frame = CGRectMake(0, 0, 30, 30);
-        cat.backgroundColor = UIColor.yellowColor()
         self.view.addSubview(cat)
         
         //Mice
         mice = [mouse1, mouse2, mouse3]
         
         for mouse in mice {
-            mouse.setup()
             self.view.addSubview(mouse)
         }
     }
@@ -311,29 +342,51 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let recognizer = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
         recognizer.delegate = self
-        self.view.addGestureRecognizer(recognizer)
+        self.view.addGestureRecognizer(recognizer)        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
      
-//        //Position cat
-//        self.moveCatToVertex(v9)
-//        
-//        //Postition mice
-//        self.moveMouse(mouse1, toVertex: v0)
-//        self.moveMouse(mouse2, toVertex: v1)
-//        self.moveMouse(mouse3, toVertex: v2)
-        
-        
-        //Position cat
-        self.moveCatToVertex(v0)
-        
-        //Postition mice
-        self.moveMouse(mouse1, toVertex: v5)
-        self.moveMouse(mouse2, toVertex: v6)
-        self.moveMouse(mouse3, toVertex: v7)
+        if firstLayoutComplete == false {
+            firstLayoutComplete = true
+         
+            //Position cat
+            self.moveCatToVertex(v9)
+    
+            //Postition mice
+            self.moveMouse(mouse1, toVertex: v0)
+            self.moveMouse(mouse2, toVertex: v1)
+            self.moveMouse(mouse3, toVertex: v2)
+    
+            //Message view
+            self.view.bringSubviewToFront(messageView)
+            hideError()
+        }
     }
     
+    //UI Updates
+    
+    func showError(message:String) {
+        messageLabel.text = message
+        self.view.layoutIfNeeded()
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options:UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.messageTopDistanceConstraint.constant = 100
+            self.view.layoutIfNeeded()
+            }) { (complete) -> Void in
+            self.hideError()
+        }
+    }
+    
+    func hideError() {
+        self.view.layoutIfNeeded()
+        
+        UIView.animateWithDuration(0.5, delay: 2.0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options:UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.messageTopDistanceConstraint.constant = -self.messageView.frame.height-20
+            self.view.layoutIfNeeded()
+        }) { (complete) -> Void in
+            
+        }
+    }
 }
 

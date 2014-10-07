@@ -19,13 +19,21 @@ class Vertex: UIView {
     var ID:Int = -1
     var occupiedBy:OccupiedBy = OccupiedBy.No_one
     
+    var imageView:UIImageView!
+    
+    func setup() {
+        self.backgroundColor = UIColor.clearColor()
+        imageView = UIImageView(frame: self.bounds)
+        imageView.image = UIImage(named: "vertex.png")
+        self.addSubview(imageView)
+    }
     
     func highlight() {
         self.backgroundColor = UIColor.greenColor()
     }
     
     func unhighlight() {
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.clearColor()
     }
 //
 //    init(ID:Int) {

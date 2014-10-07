@@ -13,9 +13,19 @@ class Mouse: UIView {
     var isSelected = false
     var currentVertex:Vertex?
     
-    func setup() {
-        self.frame = CGRectMake(0, 0, 25, 25)
-        self.backgroundColor = UIColor .blackColor()
+    var imageView:UIImageView!
+    
+    override init() {
+        super.init(frame: CGRectMake(0, 0, 25, 25))
+        self.backgroundColor = UIColor.clearColor()
+        
+        imageView = UIImageView(frame: frame)
+        imageView.image = UIImage(named: "mouse.png")
+        self.addSubview(imageView)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func highlight() {
@@ -24,7 +34,7 @@ class Mouse: UIView {
     }
     
     func unhighlight() {
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.clearColor()
         isSelected = false
     }
 
